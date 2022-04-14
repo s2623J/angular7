@@ -1,0 +1,85 @@
+<h3>Add a new contact:</h3>
+
+<hr>
+
+<p>{{ contact | json }}</p>  <!-- This is to test 2-way-binding on model -->
+
+<form class="form" #f1="ngForm"> <!-- Using "f1" as a variable for the form as a bracketed attribute expression -->
+    <div class="form-group">
+        <!-- By adding "for" below, a cellphone user can touch the label and select the input -->
+        <label for="firstname">First Name:</label> 
+        <!-- [(ngModel)] requires "FormsModule" in the app.moddule -->
+        <!-- [(ngModel)] uses square brackets because it is an expression -->
+        <!-- [(ngModel)] uses parenthesis because it is an on-key up event -->
+        <input type="text" class="form-control" id="firstname" name="firstname" [(ngModel)]="contact.firstname" 
+            #firstname="ngModel" required minlength="3" maxlength="15">
+
+        <div class="err" *ngIf="firstname.dirty && firstname.invalid">
+            <div *ngIf="firstname.errors?.['required']">First name is required</div>
+            <div *ngIf="firstname.errors?.['minlength']">Please enter at least 3 letters for firstname</div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <!-- By adding "for" below, a cellphone user can touch the label and select the input -->
+        <label for="lastname">Last Name:</label>
+        <input type="text" class="form-control" id="lastname" name="lastname" [(ngModel)]="contact.lastname">
+    </div>
+
+    <div class="form-group">
+        <!-- By adding "for" below, a cellphone user can touch the label and select the input -->
+        <label>Gender:</label>
+        <label><input type="radio" name="gender" value="Male" [(ngModel)]="contact.gender">Male</label>
+        <label><input type="radio" name="gender" value="Female" [(ngModel)]="contact.gender">Female</label>
+    </div>
+
+    <div class="form-group">
+        <!-- By adding "for" below, a cellphone user can touch the label and select the input -->
+        <label for="email">Email Address:</label>
+        <input type="email" class="form-control" id="email" name="email" [(ngModel)]="contact.email" 
+            #email="ngModel" required>
+
+        <div class="err" *ngIf="email.dirty && email.invalid">
+            <div *ngIf="email.errors?.['required']">Email is required</div>
+            <div *ngIf="email.errors?.['minlength']">Please enter at least 3 letters for email</div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <!-- By adding "for" below, a cellphone user can touch the label and select the input -->
+        <label for="phone">Phone Number:</label>
+        <input type="text" class="form-control" id="phone" name="phone" [(ngModel)]="contact.phone"
+        #phone="ngModel" required pattern="\d{10,12}">
+
+        <div class="err" *ngIf="phone.dirty && phone.invalid">
+            <div *ngIf="phone.errors?.['required']">Phone number is required</div>
+            <div *ngIf="phone.errors?.['pattern']">Please enter at least 10-12 digits for phone number</div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <!-- By adding "for" below, a cellphone user can touch the label and select the input -->
+        <label for="city">City:</label>
+        <input type="text" class="form-control" id="city" name="city" [(ngModel)]="contact.city">
+    </div>
+
+    <div class="form-group">
+        <!-- By adding "for" below, a cellphone user can touch the label and select the input -->
+        <label for="state">State:</label>
+        <input type="text" class="form-control" id="state" name="state" [(ngModel)]="contact.state">
+    </div>
+
+    <div class="form-group">
+        <!-- By adding "for" below, a cellphone user can touch the label and select the input -->
+        <label for="country">Country:</label>
+        <input type="text" class="form-control" id="country" name="country" [(ngModel)]="contact.country">
+    </div>
+
+    <div class="form-group">
+        <!-- By adding "for" below, a cellphone user can touch the label and select the input -->
+        <label for="picture">Picture (URL):</label>
+        <input type="file" class="form-control" id="picture" name="picture" [(ngModel)]="contact.picture">
+    </div>
+
+    <button class="btn btn-{{f1.valid ? 'primary' : 'danger'}}" [disabled]="f1.invalid" (click)="AddContact()">Add Contact</button>
+</form>

@@ -1,0 +1,1 @@
+import './app/my-example-app';

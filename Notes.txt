@@ -1,0 +1,166 @@
+
+Setup:
+    Angular CLI
+    ng serve -o         Will open the application in the default browser
+    ng new first-app    Auto generate a new web app called "first-app"
+
+Reference:
+    API List:           https://angular.io/api
+
+Angular Described:
+    5 Building Blocks:
+        1.  Components
+        2.  Pipes                       Used to transform data
+        3.  Directives                  Control behavior and appearance of Components
+        4.  Injectables                 Define business logic of app
+        5.  Services                    Singletons injected to provide data
+
+WebPak:
+    What Angular uses to assemble/dissassemble web apps
+
+Component TS Files:
+    Act as a config files to describe the selectors, CSS sources, template pages, etc. 
+    
+Emmet:
+    Auto-generates markup using dot notation 
+        Example:    button.btn.btn-primary >> creates >> <button class="btn btn-primary"></button>
+                    button.btn.btn-primary*4{Button $} >> <button class="btn btn-primary">Button 1</button>(Creates 4 Buttons)
+                    .row>.col*2 >>         <div class="row">
+                                                <div class="col"></div>
+                                                <div class="col"></div>
+                                            </div>
+    
+Bootstrap:
+    Add bootstrrap by including it in angular.json build styles
+
+Create new custom App:
+    Delete all app component-related files in app directory
+    Replace contents of main.ts and import new TS file (NOT HTML):
+        (ie. import './app/my-example-app';)
+    New TS file should begin with @Component - Emmet will add import from Angular Core
+    Follow with adding Component selectors in JSON format
+    Add class 
+    Add NgModule JSON to bootstrap new component 
+        Continue by adding declarations of all components to added
+    Import the BrowserModule
+    Import the platformBrowserDynamic
+    Use platformBrowserDynamic() to access the bootstrapModule function. Then add AppModule as a param
+    Add an AppModule class and process it through the bootstrap module 
+
+Decorators:
+    Begin with a Typescript "@" symbol
+        (ie. SomeDecorator({ }))
+    The "selector" defines the way the component is used:
+        selector: 'app-counter' // TagName
+        selector: '.app-counter' // ClassName
+        selector: '[app-counter]' // Attribute of HTML element
+    The "templateURL" defines where the markup is:
+        templateURL: './app-counter.component.html'
+
+Component Creation:
+    Use Angular CLI to generate:
+        (ie. ng generate component components/app-header) // Puts components in a "component" directory
+        (ie. ng generate pipe pipes/age)
+        (ie. ng ng generate service services/phonebook)
+
+Data Binding for Counter App:
+    Add a count variable to the component ".ts" file 
+        With typescript, you can define the data type:
+            (ie. count:  number = 0;)
+        All variables and functions are typically written here 
+        Add functions to ".ts" files with corresponding calls to the functions from the markup:
+            (ie. (click)="decrement()")
+    
+Directives:
+    Arguably the most important part of an Angular app
+    Directives execute from the DOM
+    A component is just a directive with a template
+    Directives look like custom Attribute in markup.
+    Structural directives use an asterisk, instead of brackets
+    Structural directives only change the structure of the DOM
+    For a functional example, type:
+        ng new directives-demo
+    To let Directive take control of the parent that is using the ddirective, you 
+        must pass a variable of type "ElementRef" to it as a param:
+        (ie. constructor(private elem: ElementRef) { })
+    To apply changes to appearance of parent, implement "AfterViewInit":
+        (ie. export class BoxDirective implements AfterViewInit {})
+
+    Examples:
+        <div [ngClass]="'text-danger': p1.age<18, 'text-success': p1.age>=18"></div>
+        <h3 *ngIf="products.length===0">There are no products to show</h3>
+
+sessionStorage:
+    Uses browser to store data, settings, config, etc. between browser refreshes
+        (ie. sessionStorage['userChoice'] = choice;)
+
+localStorage:
+    Uses browser to store data, settings, config, etc. between browser restarts
+        (ie. localStorage['userChoice'] = choice;)
+
+Constructors:
+    Only used for dependancy injection
+
+Editing:
+    Edit many identicle tags at the same time by highlighting, pressing Ctrl+D as 
+    many times as necessary, and typing what should follow.
+
+Pipes:
+    Manage data handling within the markup. Provides services like uppercase and 
+        async. Can work with either promises, or observables
+    Flags - Are further argument params that act as optional instructions - typically 
+        processed as "Switch" cases
+
+Server:
+    Install a Server 
+    Add something like: "json-server": "json-server --port 4300 --watch db/data.json" 
+        to the package.json file so that server can be run from the command prompt
+    Execute from prompt: "npm run json-server"
+    If needed, a mock DB can be generated for DEV purposes via: "https://mockaroo.com/"
+    Add "import {HttpClientModule} from '@angular/common/http';" to the top of app.module.ts 
+    Add "HttpClientModule" to the @NgModule Imports section
+    
+Forms:
+    2 Types:
+        Reactive (Model Driven) Forms:
+            Robust
+            Scalable 
+            Reusable 
+            Testable
+            Validation:
+                Requires FormGroup, and FormControl classes
+                Requires ReactiveFormsModule
+
+        Template Driven:
+            Simpler to add
+            Not scalable
+            Not testable
+            Validation:
+                Info available at: https://angular.io/guide/form-validation
+                #firstName="ngModel" exports NgModel into a local variable called firstName. NgModel 
+                    mirrors many of the properties of its underlying FormControl instance, so you 
+                    can use this in the template to check for control states such as valid and dirty. 
+                As the form is being filled out, CSS classes are being updated to describe the 
+                    current state of the form 
+                Use *ngIf attributes to make error message div tags visible based on the form's "error" 
+                    collection: (ie. *ngIf="email.errors?.['required']")
+        
+JQuery:
+    Needs to be npm installed, and added to the "scripts" section of the angular.json file 
+        (ie. npm install jquery @types/jquery)
+    Add jQuery variable:
+        (ie. declare var $: any;)
+    
+Alerts:
+    Use SweetAlert2 (details: https://www.positronx.io/angular-popup-notification-with-sweetalert2-example/)
+
+Builds:
+    "ng build --prod --aot" - Executes build
+    "tree dist" - Shows site structure tree from prompt
+    CDN:    3rd Party provider that can host the build product (ie. surge.sh hosting provider)
+
+Typescript:
+    JIT:    "Just In Time" compiling (When coding)
+    AOT:    "Ahead Of Time" compiling (when compiling a build(no map files, compiler, etc.))
+    ng build --help will list flags that will affect compilier output
+    
